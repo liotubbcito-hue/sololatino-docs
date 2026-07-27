@@ -14,7 +14,7 @@
   "quality": "1080p",
   "baseUrl": "https://sololatino.net/",
   "searchBaseUrl": "https://sololatino.net/search?q=%s",
-  "scriptUrl": "https://git.luna-app.eu/50n50/sources/raw/branch/main/animeav1/animeav1.js",
+  "scriptUrl": "",
   "type": "anime",
   "asyncJS": true,
   "softsub": true,
