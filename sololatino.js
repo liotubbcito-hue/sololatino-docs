@@ -1,7 +1,7 @@
 async function searchResults(keyword) {
     const results = [];
     try {
-        const response = await fetchv2("https://animeav1.com/catalogo?search=" + encodeURIComponent(keyword));
+        const response = await fetchv2("https://sololatino.net/animes" + encodeURIComponent(keyword));
         const html = await response.text();
         console.log(html);
         
@@ -12,7 +12,7 @@ async function searchResults(keyword) {
             results.push({
                 title: match[2].trim(),
                 image: match[1].trim(),
-                href: "https://animeav1.com" + match[3].trim()
+                href: "https://sololatino.net/" + match[3].trim()
             });
         }
         
@@ -60,7 +60,7 @@ async function extractEpisodes(url) {
 
         while ((match = regex.exec(html)) !== null) {
             results.push({
-                href: "https://animeav1.com" + match[1].trim(),
+                href: "https://sololatino.net/" + match[1].trim(),
                 number: parseInt(match[2], 10)
             });
         }
