@@ -1,0 +1,219 @@
+{
+  "name": "SoloLatino",
+  "version": "1.0.0",
+  "description": "Módulos de SoloLatino.net - Plataforma de streaming de películas, series y anime en español latino",
+  "baseUrl": "https://sololatino.net/",
+  "modules": [
+    {
+      "id": "movies",
+      "name": "Películas",
+      "description": "Catálogo completo de películas en español latino",
+      "route": "/peliculas",
+      "icon": "🎥",
+      "features": [
+        "Miles de películas de todos los géneros",
+        "Filtros avanzados por género, año, popularidad",
+        "Búsqueda por título, actor o director",
+        "Información detallada: sinopsis, elenco, calificación",
+        "Múltiples calidades de reproducción"
+      ]
+    },
+    {
+      "id": "series",
+      "name": "Series",
+      "description": "Catálogo de series de televisión organizadas por temporada y episodio",
+      "route": "/series",
+      "icon": "📺",
+      "features": [
+        "Series de drama, comedia, acción y más",
+        "Organización por temporadas",
+        "Listado de episodios disponibles",
+        "Seguimiento de progreso de visualización",
+        "Sinopsis detallada de cada episodio"
+      ]
+    },
+    {
+      "id": "anime",
+      "name": "Anime",
+      "description": "Sección dedicada exclusivamente a contenido anime en español latino",
+      "route": "/anime",
+      "icon": "🎨",
+      "features": [
+        "Anime de todos los géneros y épocas",
+        "Filtros por tipo (Shonen, Shojo, Seinen, etc.)",
+        "Filtros por año de estreno",
+        "Episodios completos en calidad HD",
+        "Información del estudio y directores"
+      ]
+    },
+    {
+      "id": "new-releases",
+      "name": "Estrenos",
+      "description": "Contenido recientemente añadido a la plataforma",
+      "route": "/estrenos",
+      "icon": "⭐",
+      "features": [
+        "Películas y series nuevas",
+        "Ordenadas por fecha de adición",
+        "Destacados los lanzamientos más recientes",
+        "Combinación de todos los tipos de contenido",
+        "Actualizaciones diarias"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "id": "search",
+      "name": "Búsqueda Global",
+      "description": "Busca contenido en toda la plataforma",
+      "icon": "🔍",
+      "capabilities": [
+        "Búsqueda por título exacto",
+        "Búsqueda por actor o director",
+        "Sugerencias mientras escribes",
+        "Resultados instantáneos"
+      ]
+    },
+    {
+      "id": "video-player",
+      "name": "Reproductor de Video",
+      "description": "Reproductor integrado con controles avanzados",
+      "icon": "🎬",
+      "capabilities": [
+        "Reproducción fluida en múltiples calidades",
+        "Controles de velocidad de reproducción",
+        "Subtítulos sincronizados",
+        "Modo pantalla completa"
+      ]
+    },
+    {
+      "id": "filters",
+      "name": "Sistema de Filtros",
+      "description": "Filtra contenido por múltiples criterios",
+      "icon": "🎯",
+      "capabilities": [
+        "Filtro por género",
+        "Filtro por año de lanzamiento",
+        "Filtro por popularidad/calificación",
+        "Filtro por calidad disponible"
+      ]
+    },
+    {
+      "id": "content-details",
+      "name": "Página de Detalles",
+      "description": "Información completa sobre cualquier título",
+      "icon": "📄",
+      "capabilities": [
+        "Sinopsis detallada",
+        "Información del elenco",
+        "Año y duración",
+        "Calificación y reseñas",
+        "Contenido relacionado"
+      ]
+    }
+  ],
+  "contentSchema": {
+    "title": "Esquema de Contenido",
+    "fields": {
+      "id": {
+        "type": "String/Integer",
+        "description": "Identificador único del contenido"
+      },
+      "titulo": {
+        "type": "String",
+        "description": "Nombre del película, serie o anime"
+      },
+      "descripcion": {
+        "type": "String",
+        "description": "Sinopsis o resumen del contenido"
+      },
+      "año": {
+        "type": "Integer",
+        "description": "Año de lanzamiento/estreno"
+      },
+      "generos": {
+        "type": "Array",
+        "description": "Lista de géneros del contenido"
+      },
+      "actores": {
+        "type": "Array",
+        "description": "Elenco principal"
+      },
+      "director": {
+        "type": "String",
+        "description": "Director de la película"
+      },
+      "duracion": {
+        "type": "Integer",
+        "description": "Duración en minutos"
+      },
+      "calidades": {
+        "type": "Array",
+        "description": "Resoluciones disponibles",
+        "values": ["1080p", "720p", "480p", "360p"]
+      },
+      "idiomas": {
+        "type": "Array",
+        "description": "Idiomas disponibles",
+        "values": ["Español Latino", "Español Castellano", "Inglés"]
+      },
+      "subtitulos": {
+        "type": "Array",
+        "description": "Idiomas de subtítulos disponibles"
+      },
+      "puntuacion": {
+        "type": "Float",
+        "description": "Calificación promedio (0-10)"
+      },
+      "imagen": {
+        "type": "String (URL)",
+        "description": "URL del póster/thumbnail"
+      },
+      "tipo": {
+        "type": "String",
+        "description": "Categoría: película, serie, anime",
+        "values": ["película", "serie", "anime"]
+      }
+    },
+    "seriesFields": {
+      "temporadas": {
+        "type": "Integer",
+        "description": "Número total de temporadas"
+      },
+      "episodios": {
+        "type": "Integer",
+        "description": "Número total de episodios"
+      },
+      "estado": {
+        "type": "String",
+        "description": "En emisión, Finalizada, En pausa",
+        "values": ["En emisión", "Finalizada", "En pausa"]
+      }
+    }
+  },
+  "navigation": {
+    "home": "/",
+    "movies": "/peliculas",
+    "series": "/series",
+    "anime": "/anime",
+    "new_releases": "/estrenos",
+    "search": "/buscar"
+  },
+  "compatibleBrowsers": [
+    "Google Chrome (v80+)",
+    "Mozilla Firefox (v75+)",
+    "Safari (v13+)",
+    "Microsoft Edge (v80+)"
+  ],
+  "supportedDevices": [
+    "Desktop/PC",
+    "Laptop",
+    "Tablet",
+    "Smartphone"
+  ],
+  "requirements": {
+    "internet": "Mínimo 2 Mbps (480p), 5 Mbps (1080p)",
+    "storage": "No requiere instalación",
+    "account": "No requerido"
+  }
+}
