@@ -1,32 +1,27 @@
 {
   "sourceName": "SoloLatino",
-  "iconUrl": "https://raw.githubusercontent.com/fdlio074-commits/sources/main/animeonline/icon.png",
+  "iconUrl": "https://sololatino.net/favicon.ico",
   "author": {
-    "name": "Lio",
-    "icon": "https://avatars.githubusercontent.com/fdlio074-commits"
+    "name": "Lionel",
+    "icon": "https://github.githubassets.com/favicons/favicon.png"
   },
-  "version": "1.0.1",
+  "version": "1.0.0",
   "language": "Spanish",
-  "languageType": [
-    "Dubbed"
-  ],
-  "streamType": "HLS",
-  "quality": "1080p",
-  "baseUrl": "https://sololatino.net/",
-  "searchBaseUrl": "https://sololatino.net/search?q=%s",
-  "scriptUrl": "https://github.com/liotubbcito-hue/sololatino-docs/blob/main/sololatino.js",
+  "baseUrl": "https://sololatino.net",
+  "searchBaseUrl": "https://sololatino.net/?s=",
+  "scriptUrl": "https://raw.githubusercontent.com/liotubbcito-hue/sora-sololatino/main/module.js",
   "type": "anime",
+  "streamType": "HLS",
   "asyncJS": true,
-  "softsub": true,
+  "quality": "1080p",
   "downloadSupport": false,
-  "note": "Use external player.",
-  "supportsMojuru": true,
-  "supportsDartotsu": true,
+  "softsub": true,
   "supportsSora": true,
   "supportsLuna": true,
+  "supportsDartotsu": true,
   "supportsAnymex": true,
   "supportsTsumi": true,
   "supportsHiyoku": true,
   "supportsShirox": true,
-  "supportsEclipse": true
+  "supportsMojuru": true
 }
