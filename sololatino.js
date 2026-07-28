@@ -2,9 +2,7 @@ const BASE_URL = 'https://sololatino.net';
 
 async function soraFetch(url, options = { headers: {}, method: 'GET', body: null }) {
     const headers = options.headers || {};
-    if (!headers['User-Agent']) {
-        headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
-    }
+    headers['User-Agent'] = 'Mozilla/5.0';
     try {
         return await fetchv2(url, headers, options.method || 'GET', options.body || null);
     } catch (e) {
@@ -12,61 +10,82 @@ async function soraFetch(url, options = { headers: {}, method: 'GET', body: null
     }
 }
 
-function absoluteUrl(url) {
+function abs(url) {
     if (!url) return '';
     if (url.startsWith('http')) return url;
     if (url.startsWith('//')) return 'https:' + url;
     return BASE_URL + (url.startsWith('/') ? url : '/' + url);
 }
 
-function decodeHtml(text) {
-    return text
-        .replace(/&/g, '&')
-        .replace(/"/g, '"')
-        .replace(/'/g, "'")
-        .replace(/</g, '<')
-        .replace(/>/g, '>');
-}
-
 async function searchResults(keyword) {
     try {
-        const url = `${BASE_URL}/?s=${encodeURIComponent(keyword)}`;
-        const res = await soraFetch(url);
+        const res = await soraFetch(`${BASE_URL}/?s=${encodeURIComponent(keyword)}`);
         if (!res) return JSON.stringify([]);
 
         const html = await res.text();
-        const results = [];
+        const out = [];
 
-        // Busca cualquier enlace dentro de artículos con imagen
-        const regex = /<article[\s\S]*?<a[^>]+href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+        // Busca enlaces de entradas
+        const regex = /href=["'](https?:\/\/sololatino\.net\/[^"']+)["'][^>]*>([^<]{2,})</gi;
 
-        let match;
-        while ((match = regex.exec(html)) !== null) {
-            const href = absoluteUrl(match[1]);
-            const block = match[2];
+        let m;
+        while ((m = regex.exec(html)) !== null) {
+            const href = m[1];
+            const title = m[2].trim();
 
-            const imgMatch = block.match(/<img[^>]+src=["']([^"']+)["']/i);
-            const titleMatch = block.match(/title=["']([^"']+)["']/i);
-
-            let title = '';
-            if (titleMatch) {
-                title = decodeHtml(titleMatch[1].trim());
-            } else {
-                // fallback: texto visible
-                title = decodeHtml(block.replace(/<[^>]+>/g, '').trim());
-            }
-
-            if (title && href) {
-                results.push({
-                    title,
-                    image: imgMatch ? absoluteUrl(imgMatch[1]) : '',
-                    href
+            if (title.length > 2) {
+                out.push({
+                    title: title,
+                    image: '',
+                    href: href
                 });
             }
         }
 
-        return JSON.stringify(results);
+        return JSON.stringify(out.slice(0, 20));
     } catch (e) {
         return JSON.stringify([]);
+    }
+}
+
+async function extractDetails(url) {
+    return JSON.stringify([{
+        description: '',
+        aliases: '',
+        airdate: ''
+    }]);
+}
+
+async function extractEpisodes(url) {
+    return JSON.stringify([{
+        href: url,
+        number: 1
+    }]);
+}
+
+async function extractStreamUrl(url) {
+    try {
+        const res = await soraFetch(url);
+        if (!res) return JSON.stringify({ streams: [] });
+
+        const html = await res.text();
+        const streams = [];
+
+        const re = /<iframe[^>]+src=["']([^"']+)["']/gi;
+        let m;
+
+        while ((m = re.exec(html)) !== null) {
+            streams.push({
+                title: 'Servidor',
+                streamUrl: abs(m[1]),
+                headers: {
+                    Referer: BASE_URL
+                }
+            });
+        }
+
+        return JSON.stringify({ streams });
+    } catch (e) {
+        return JSON.stringify({ streams: [] });
     }
 }
