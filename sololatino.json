@@ -9,7 +9,7 @@
   "language": "Spanish",
   "baseUrl": "https://sololatino.net/",
   "searchBaseUrl": "https://sololatino.net/buscar",
-  "scriptUrl": "https://raw.githubusercontent.com/tuusuario/turepo/main/example-module.js",
+  "scriptUrl": "https://github.com/liotubbcito-hue/sololatino-docs/blob/main/sololatino.js",
   "type": "anime",
   "streamType": "HLS",
   "asyncJS": true,
