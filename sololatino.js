@@ -7,11 +7,11 @@ async function searchResults(keyword) {
     const html = await res.text();
 
     const results = [...html.matchAll(
-      /<a href="(https:\/\/sololatino\.net\/[^"]+)"[^>]*>\s*<img[^>]+src="([^"]+)"[^>]+alt="([^"]+)"/g
+      /<a href="([^"]+)"[^>]*>\s*<img[^>]+src="([^"]+)"[^>]+(?:alt|title)="([^"]*)"/g
     )].map(m => ({
-      title: m[3].trim(),
+      title: m[3].trim() || "Sin título",
       image: m[2],
-      href: m[1]
+      href: m[1].startsWith("http") ? m[1] : `${BASE}${m[1]}`
     }));
 
     return JSON.stringify(results);
