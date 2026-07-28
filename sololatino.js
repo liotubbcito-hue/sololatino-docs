@@ -37,98 +37,36 @@ async function searchResults(keyword) {
         const html = await res.text();
         const results = [];
 
-        const regex = /<a[^>]+href=["']([^"']+)["'][^>]*title=["']([^"']+)["'][\\s\\S]*?<img[^>]+src=["']([^"']+)["']/gi;
+        // Busca cualquier enlace dentro de artículos con imagen
+        const regex = /<article[\s\S]*?<a[^>]+href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
 
         let match;
         while ((match = regex.exec(html)) !== null) {
-            results.push({
-                title: decodeHtml(match[2].trim()),
-                image: absoluteUrl(match[3]),
-                href: absoluteUrl(match[1])
-            });
+            const href = absoluteUrl(match[1]);
+            const block = match[2];
+
+            const imgMatch = block.match(/<img[^>]+src=["']([^"']+)["']/i);
+            const titleMatch = block.match(/title=["']([^"']+)["']/i);
+
+            let title = '';
+            if (titleMatch) {
+                title = decodeHtml(titleMatch[1].trim());
+            } else {
+                // fallback: texto visible
+                title = decodeHtml(block.replace(/<[^>]+>/g, '').trim());
+            }
+
+            if (title && href) {
+                results.push({
+                    title,
+                    image: imgMatch ? absoluteUrl(imgMatch[1]) : '',
+                    href
+                });
+            }
         }
 
         return JSON.stringify(results);
     } catch (e) {
         return JSON.stringify([]);
-    }
-}
-
-async function extractDetails(url) {
-    try {
-        const res = await soraFetch(url);
-        if (!res) {
-            return JSON.stringify([{
-                description: '',
-                aliases: '',
-                airdate: ''
-            }]);
-        }
-
-        const html = await res.text();
-
-        let description = '';
-        const descMatch = html.match(/<p[^>]*class=["'][^"']*?(?:sinopsis|overview|description)[^"']*["'][^>]*>([\\s\\S]*?)<\\/p>/i);
-        if (descMatch) {
-            description = decodeHtml(descMatch[1].replace(/<[^>]+>/g, '').trim());
-        }
-
-        return JSON.stringify([{
-            description,
-            aliases: '',
-            airdate: ''
-        }]);
-    } catch (e) {
-        return JSON.stringify([{
-            description: '',
-            aliases: '',
-            airdate: ''
-        }]);
-    }
-}
-
-async function extractEpisodes(url) {
-    try {
-        return JSON.stringify([
-            {
-                href: url,
-                number: 1
-            }
-        ]);
-    } catch (e) {
-        return JSON.stringify([]);
-    }
-}
-
-async function extractStreamUrl(url) {
-    try {
-        const res = await soraFetch(url);
-        if (!res) {
-            return JSON.stringify({ streams: [] });
-        }
-
-        const html = await res.text();
-
-        const streams = [];
-
-        const iframeRegex = /<iframe[^>]+src=["']([^"']+)["']/gi;
-        let match;
-
-        while ((match = iframeRegex.exec(html)) !== null) {
-            const iframeUrl = absoluteUrl(match[1]);
-
-            streams.push({
-                title: 'Servidor',
-                streamUrl: iframeUrl,
-                headers: {
-                    Referer: BASE_URL,
-                    'User-Agent': 'Mozilla/5.0'
-                }
-            });
-        }
-
-        return JSON.stringify({ streams });
-    } catch (e) {
-        return JSON.stringify({ streams: [] });
     }
 }
