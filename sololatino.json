@@ -1,1 +1,18 @@
-
+{
+  "sourceName": "SoloLatino",
+  "author": {
+    "name": "Lio",
+    "icon": "🔥",
+    "iconUrl": ""
+  },
+  "version": "1.0.0",
+  "language": "es",
+  "streamType": "hls",
+  "quality": "1080p",
+  "baseUrl": "https://sololatino.net",
+  "searchBaseUrl": "https://sololatino.net/?s=%s",
+  "scriptUrl": "https://raw.githubusercontent.com/TU-USUARIO/SoloLatino/main/script.js",
+  "type": "shows",
+  "downloadSupport": true,
+  "description": "Módulo de SoloLatino creado por Lio."
+}
