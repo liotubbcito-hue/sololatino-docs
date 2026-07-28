@@ -14,5 +14,7 @@
   "scriptUrl": "https://raw.githubusercontent.com/liotubbcito-hue/sololatino-docs/main/sololatino.js",
   "type": "shows",
   "downloadSupport": true,
-  "description": "Módulo de SoloLatino creado por Lio."
+  "description": "Módulo de SoloLatino creado por Lio.",
+  "asyncJS": true,
+  "streamAsyncJS": true
 }
