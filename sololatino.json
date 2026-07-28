@@ -5,10 +5,10 @@
     "name": "Lionel",
     "icon": "https://github.githubassets.com/favicons/favicon.png"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "language": "Spanish",
   "baseUrl": "https://sololatino.net",
-  "searchBaseUrl": "https://sololatino.net/?s=%s",
+  "searchBaseUrl": "https://sololatino.net/buscar?q=%s",
   "scriptUrl": "https://raw.githubusercontent.com/liotubbcito-hue/sololatino-docs/main/sololatino.js",
   "type": "movies",
   "streamType": "HLS",
